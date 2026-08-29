@@ -1,0 +1,820 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=31mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={The sharp lower-limit constant for the first decrease of a harmonic denominator},
+  pdfauthor={Wouter van Doorn}
+}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\F}{\mathbb F}
+\newcommand{\lcm}{\mathop{\rm lcm}}
+
+\title{The sharp lower-limit constant for the first decrease\\
+of a harmonic denominator}
+\author{ChatGPT}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For positive integers $a\leq b$, write
+\[
+  \sum_{j=a}^{b}\frac1j=\frac{u_{a,b}}{v_{a,b}},
+  \qquad \gcd(u_{a,b},v_{a,b})=1,
+  \qquad v_{a,b}>0,
+\]
+and let $b(a)$ be the least $b>a$ for which $v_{a,b}<v_{a,b-1}$.
+For
+\[
+  f_d(X)=\sum_{i=0}^{d}\prod_{\substack{0\leq j\leq d\\j\neq i}}(X-j)
+\]
+and for the density $\delta_d$ of primes modulo which $f_d$ has a root, put
+\[
+  c=\sum_{d=1}^{\infty}\frac{\delta_d}{d(d+1)}.
+\]
+We prove that, for every $\varepsilon>0$, there are infinitely many pairs $a<b$ with
+\[
+  b<a+\left(\frac1{1+c}+\varepsilon\right)\log a
+  \qquad\text{and}\qquad
+  v_{a,b}<v_{a,b-1}.
+\]
+Together with the reverse inequality established in the accompanying manuscript~\cite{VD}, this gives
+\[
+  \liminf_{a\to\infty}\frac{b(a)-a}{\log a}=\frac1{1+c}.
+\]
+The main additional input is a finite-field form of Hal\'asz's inequality; we also use simultaneous Dirichlet approximation in an elementary auxiliary construction.
+\end{abstract}
+
+\section{Notation and the main theorem}
+
+For $a\leq b$, define
+\[
+  L_{a,b}=\lcm(a,a+1,\ldots,b),
+  \qquad
+  X_{a,b}=L_{a,b}\sum_{j=a}^{b}\frac1j,
+  \qquad
+  g_{a,b}=\gcd(X_{a,b},L_{a,b}).
+\]
+Then
+\[
+  v_{a,b}=\frac{L_{a,b}}{g_{a,b}}.
+\]
+We use $\nu_p$ for the $p$-adic valuation. All logarithms are natural.
+
+For $d\geq0$, let
+\[
+  f_d(X)=\sum_{i=0}^{d}\prod_{\substack{0\leq j\leq d\\j\neq i}}(X-j).
+\]
+In particular, $f_0=1$. Whenever $x\notin\{0,1,\ldots,d\}$ in a field,
+\begin{equation}\label{eq:partial-fraction}
+  \sum_{i=0}^{d}\frac1{x-i}
+  =\frac{f_d(x)}{\prod_{i=0}^{d}(x-i)}.
+\end{equation}
+Let $\delta_d$ be the density of primes $p$ for which $f_d$ has a root modulo $p$. This density exists by Chebotarev's theorem~\cite{Chebotarev}. Set
+\begin{equation}\label{eq:def-c}
+  c=\sum_{d=1}^{\infty}\frac{\delta_d}{d(d+1)}.
+\end{equation}
+
+\begin{theorem}\label{thm:main}
+For every $\varepsilon>0$, there are infinitely many positive integers $a<b$ such that
+\[
+  b<a+\left(\frac1{1+c}+\varepsilon\right)\log a
+\]
+and
+\[
+  v_{a,b}<v_{a,b-1}.
+\]
+Consequently,
+\[
+  \liminf_{a\to\infty}\frac{b(a)-a}{\log a}\leq\frac1{1+c}.
+\]
+\end{theorem}
+
+\begin{corollary}
+Combined with the lower bound from~\cite{VD},
+\[
+  \liminf_{a\to\infty}\frac{b(a)-a}{\log a}\geq\frac1{1+c},
+\]
+Theorem~\ref{thm:main} gives
+\[
+  \liminf_{a\to\infty}\frac{b(a)-a}{\log a}=\frac1{1+c}.
+\]
+\end{corollary}
+
+\section{Local denominator calculations}
+
+We first isolate the elementary facts about adding the endpoint $1/b$.
+
+\begin{lemma}\label{lem:endpoint}
+Let $U/V$ be a reduced fraction with $V>0$, and let $V'$ be the denominator in lowest terms of $U/V+1/b$. Then, for every prime $p$,
+\[
+  \nu_p(V')-\nu_p(V)\leq \nu_p(b).
+\]
+\end{lemma}
+
+\begin{proof}
+Put $s=\nu_p(V)$ and $k=\nu_p(b)$. Since $p\nmid U$,
+\[
+  \frac UV+\frac1b=\frac{bU+V}{bV}.
+\]
+If $k<s$, then $\nu_p(bU+V)=k$, so the new denominator exponent is $s$. If $k>s$, then $\nu_p(bU+V)=s$, so the new denominator exponent is $k$. If $k=s$, the new denominator exponent is at most $s$. The assertion follows in all three cases.
+\end{proof}
+
+\begin{lemma}\label{lem:poly}
+For every $d\geq0$,
+\begin{equation}\label{eq:symmetry}
+  f_d(d-X)=(-1)^d f_d(X).
+\end{equation}
+Moreover, if $p>d$ is prime and $f_d(x)=0$ in $\F_p$, then
+\begin{equation}\label{eq:root-avoidance}
+  x\notin\{0,1,\ldots,d\}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Replacing $j$ by $d-j$ gives
+\[
+\begin{aligned}
+  f_d(d-X)
+  &=\sum_{i=0}^{d}\prod_{\substack{0\leq j\leq d\\j\neq i}}(d-X-j)\\
+  &=(-1)^d\sum_{i=0}^{d}\prod_{\substack{0\leq j\leq d\\j\neq i}}(X-j)
+   =(-1)^d f_d(X).
+\end{aligned}
+\]
+If $x=i\in\{0,\ldots,d\}$, every summand in $f_d(i)$ vanishes except the summand indexed by $i$, and
+\[
+  f_d(i)=\prod_{\substack{0\leq j\leq d\\j\neq i}}(i-j)\neq0\pmod p
+\]
+because $p>d$.
+\end{proof}
+
+The following two lemmas concern primes larger than the square root of the interval length.
+
+\begin{lemma}[A soluble prime gives a decrease]\label{lem:S-local}
+Let $n=b-a$, let $\sqrt n<p\leq n$ be prime, and put $d=\lfloor n/p\rfloor$. Suppose that $p\mid b$ and, with
+\[
+  z\equiv \frac bp\pmod p,
+\]
+we have $f_d(z)=0$ in $\F_p$. Then
+\[
+  \nu_p(v_{a,b})\leq \nu_p(v_{a,b-1})-1.
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:poly}, $z\notin\{0,\ldots,d\}$. The multiples of $p$ in $[a,b]$ are
+\[
+  b,b-p,\ldots,b-dp.
+\]
+For $0\leq i\leq d$,
+\[
+  \frac{b-ip}{p}\equiv z-i\not\equiv0\pmod p.
+\]
+Thus none of these integers is divisible by $p^2$. Hence
+\[
+  \nu_p(L_{a,b})=\nu_p(L_{a,b-1})=1.
+\]
+Modulo $p$, only the displayed multiples of $p$ contribute to $X_{a,b}$, and therefore, using \eqref{eq:partial-fraction},
+\[
+\begin{aligned}
+  X_{a,b}
+  &\equiv \frac{L_{a,b}}p\sum_{i=0}^{d}\frac1{z-i}\\
+  &\equiv \frac{L_{a,b}}p
+       \frac{f_d(z)}{\prod_{i=0}^{d}(z-i)}
+   \equiv0\pmod p.
+\end{aligned}
+\]
+On the other hand, $L_{a,b}/b$ is a $p$-adic unit. Since
+\[
+  X_{a,b}
+  =\frac{L_{a,b}}{L_{a,b-1}}X_{a,b-1}+\frac{L_{a,b}}b
+\]
+and $L_{a,b}/L_{a,b-1}$ is also a $p$-adic unit, it follows that $p\nmid X_{a,b-1}$. Thus the old denominator contains one factor $p$, while the new denominator contains none.
+\end{proof}
+
+\begin{lemma}[The bad residues for an insoluble prime]\label{lem:T-local}
+Let $n=b-a$, let $\sqrt n<p\leq n$ be prime, and put $d=\lfloor n/p\rfloor$. Suppose that $p\mid b$ and that $f_d$ has no root in $\F_p$. Define
+\begin{equation}\label{eq:bad-z}
+  \mathcal Z_{p,d}
+  =\{0\}\cup
+   \bigl\{z\in\F_p\setminus\{0,1,\ldots,d\}:
+                 f_{d-1}(z-1)=0\bigr\}.
+\end{equation}
+If
+\[
+  z\equiv \frac bp\pmod p
+  \qquad\text{satisfies}\qquad
+  z\notin\mathcal Z_{p,d},
+\]
+then
+\[
+  \nu_p(v_{a,b})\leq \nu_p(v_{a,b-1}).
+\]
+Moreover,
+\begin{equation}\label{eq:bad-cardinality}
+  |\mathcal Z_{p,d}|\leq d.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+First suppose that $z\in\{1,\ldots,d\}$. Then $b-zp$ is divisible by $p^2$. Since $p^2>n$, it is the unique multiple of $p^2$ in $[a,b]$, and it belongs to both $[a,b-1]$ and $[a,b]$. If $p^k\Vert b-zp$, then this is the unique term of maximal $p$-adic order in both intervals. After multiplication by the corresponding least common multiple, that term is a $p$-adic unit and every other term is divisible by $p$. Hence both $X_{a,b-1}$ and $X_{a,b}$ are nonzero modulo $p$, and the $p$-parts of the two reduced denominators are equal.
+
+Now suppose that $z\notin\{0,1,\ldots,d\}$. Then none of
+\[
+  b,b-p,\ldots,b-dp
+\]
+is divisible by $p^2$, and
+\[
+  \nu_p(L_{a,b})=\nu_p(L_{a,b-1})=1.
+\]
+Since $f_d$ has no root modulo $p$, equation \eqref{eq:partial-fraction} gives
+\[
+  X_{a,b}
+  \equiv \frac{L_{a,b}}p
+      \frac{f_d(z)}{\prod_{i=0}^{d}(z-i)}
+  \not\equiv0\pmod p.
+\]
+Similarly,
+\[
+\begin{aligned}
+  X_{a,b-1}
+  &\equiv \frac{L_{a,b-1}}p\sum_{i=1}^{d}\frac1{z-i}\\
+  &\equiv \frac{L_{a,b-1}}p
+      \frac{f_{d-1}(z-1)}{\prod_{i=1}^{d}(z-i)}
+  \not\equiv0\pmod p,
+\end{aligned}
+\]
+because $z\notin\mathcal Z_{p,d}$. Again the two $p$-parts are equal.
+
+Finally, $f_{d-1}$ has degree $d-1$ and is not the zero polynomial modulo $p$, since its leading coefficient is $d$ and $p>d$. Hence the second set in \eqref{eq:bad-z} has at most $d-1$ elements, proving \eqref{eq:bad-cardinality}.
+\end{proof}
+
+We shall also use a fixed collection of small primes, but at growing prime-power scales.
+
+\begin{lemma}[A prime-power-scale decrease]\label{lem:power-local}
+Let $\ell>3$ be prime, let $m=\ell^e$, and suppose
+\[
+  2m\leq n=b-a<3m,
+  \qquad m\mid b.
+\]
+Put $z=b/m$. If $f_2(z)=0$ in $\F_\ell$, then
+\[
+  \nu_\ell(v_{a,b})\leq \nu_\ell(v_{a,b-1})-1.
+\]
+\end{lemma}
+
+\begin{proof}
+The multiples of $m$ in $[a,b]$ are exactly
+\[
+  b,b-m,b-2m.
+\]
+By Lemma~\ref{lem:poly}, $z,z-1,z-2$ are nonzero modulo $\ell$. Thus none of these three integers is divisible by $\ell^{e+1}$, and
+\[
+  \nu_\ell(L_{a,b})=\nu_\ell(L_{a,b-1})=e.
+\]
+Modulo $\ell$,
+\[
+\begin{aligned}
+  X_{a,b}
+  &\equiv \frac{L_{a,b}}m
+      \left(\frac1z+\frac1{z-1}+\frac1{z-2}\right)\\
+  &\equiv \frac{L_{a,b}}m
+      \frac{f_2(z)}{z(z-1)(z-2)}
+  \equiv0\pmod\ell.
+\end{aligned}
+\]
+The endpoint term $L_{a,b}/b$ is an $\ell$-adic unit. In
+\[
+  X_{a,b}
+  =\frac{L_{a,b}}{L_{a,b-1}}X_{a,b-1}+\frac{L_{a,b}}b,
+\]
+the first multiplier is an $\ell$-adic unit, so $\ell\nmid X_{a,b-1}$. The asserted denominator decrease follows.
+\end{proof}
+
+\section{Prime products}
+
+Fix a large integer $n$. For every integer $d$ with $1\leq d\leq\sqrt n-1$, let
+\[
+  S_d=S_d(n)
+  =\left\{p:\frac{n}{d+1}<p\leq\frac nd,
+                    \ f_d\text{ has a root modulo }p\right\},
+\]
+and let $T_d=T_d(n)$ be the complementary set of primes in the same interval. Put
+\begin{equation}\label{eq:Q}
+  S=\bigcup_{1\leq d\leq\sqrt n-1}S_d,
+  \qquad
+  Q=\prod_{q\in S}q.
+\end{equation}
+For a fixed positive integer $D$, put
+\begin{equation}\label{eq:P}
+  T^{(D)}=\bigcup_{d=1}^{D}T_d,
+  \qquad
+  P=\prod_{p\in T^{(D)}}p,
+  \qquad
+  \tau_D=\sum_{d=1}^{D}\frac{1-\delta_d}{d(d+1)}.
+\end{equation}
+
+\begin{lemma}\label{lem:products}
+As $n\to\infty$,
+\begin{equation}\label{eq:Q-asymp}
+  \log Q=(c+o(1))n.
+\end{equation}
+For each fixed $D$,
+\begin{equation}\label{eq:P-asymp}
+  \log P=(\tau_D+o(1))n.
+\end{equation}
+Moreover,
+\begin{equation}\label{eq:tau-limit}
+  \tau_D\longrightarrow1-c
+  \qquad(D\to\infty).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For each fixed $d$, Chebotarev's theorem together with partial summation gives
+\[
+  \sum_{p\in S_d}\log p
+  =\left(\frac{\delta_d}{d(d+1)}+o(1)\right)n.
+\]
+Fix $R$. Summing this for $d\leq R$ gives the corresponding initial part of \eqref{eq:Q-asymp}. All primes belonging to $S_d$ with $d>R$ are at most $n/(R+1)$, so the prime number theorem bounds their total logarithm by
+\[
+  \sum_{p\leq n/(R+1)}\log p=O\!\left(\frac nR\right).
+\]
+First let $n\to\infty$ and then $R\to\infty$. This proves \eqref{eq:Q-asymp}. Equation \eqref{eq:P-asymp} follows in the same way, now with only the fixed set $d\leq D$, and using the complementary density $1-\delta_d$. Finally,
+\[
+  \sum_{d=1}^{\infty}\frac1{d(d+1)}=1,
+\]
+so \eqref{eq:tau-limit} follows from \eqref{eq:def-c}.
+\end{proof}
+
+\section{Auxiliary prime powers and the choice of interval lengths}
+
+Fix $\varepsilon>0$. By Lemma~\ref{lem:products}, we may choose $D$ so large that
+\begin{equation}\label{eq:D-choice}
+  \frac1{\tau_D+2c}
+  <\frac1{1+c}+\frac\varepsilon2.
+\end{equation}
+Choose an even integer
+\begin{equation}\label{eq:E-choice}
+  E>D+1.
+\end{equation}
+Choose an integer $r\geq2$ such that
+\begin{equation}\label{eq:r-choice}
+  2^r>D,
+\end{equation}
+and choose distinct primes
+\[
+  \ell_1,\ldots,\ell_r\equiv1\pmod{12}.
+\]
+For every such prime, $3$ is a quadratic residue, and
+\[
+  f_2(X)=3X^2-6X+2=3(X-1)^2-1
+\]
+has exactly two roots modulo $\ell_i$.
+
+\begin{lemma}\label{lem:simultaneous-powers}
+There are infinitely many tuples of positive integers $(e_1,\ldots,e_r)$ such that, with
+\[
+  m_i=\ell_i^{e_i},
+\]
+we have
+\begin{equation}\label{eq:powers-close}
+  \frac{\max_i m_i}{\min_i m_i}\longrightarrow1
+\end{equation}
+as the tuples tend to infinity.
+\end{lemma}
+
+\begin{proof}
+For $2\leq i\leq r$, put
+\[
+  \alpha_i=\frac{\log\ell_1}{\log\ell_i}.
+\]
+By simultaneous Dirichlet approximation, for every $H$ there is an integer $1\leq q\leq H^{r-1}$ such that
+\[
+  \max_{2\leq i\leq r}\|q\alpha_i\|\leq\frac1H.
+\]
+Along a sequence with $H\to\infty$, the corresponding $q$ are unbounded. Indeed, if they were bounded, one fixed positive integer $q$ would occur for arbitrarily large $H$, forcing $q\alpha_i\in\Z$ for every $i$. This is impossible because $\log\ell_1/\log\ell_i$ is irrational for distinct primes $\ell_1$ and $\ell_i$. Take $e_1=q$ and take $e_i$ to be the nearest integer to $q\alpha_i$. Then
+\[
+  e_i\log\ell_i-e_1\log\ell_1=o(1)
+\]
+uniformly in $i$, which is equivalent to \eqref{eq:powers-close}.
+\end{proof}
+
+For one of these tuples, put
+\begin{equation}\label{eq:n-N}
+  M=\max_i m_i,
+  \qquad
+  n=2M,
+  \qquad
+  N=\prod_{i=1}^{r}m_i,
+  \qquad
+  G=\prod_{i=1}^{r}\ell_i.
+\end{equation}
+For all sufficiently large tuples,
+\begin{equation}\label{eq:scale-window}
+  2m_i\leq n<3m_i
+  \qquad(1\leq i\leq r),
+\end{equation}
+and
+\begin{equation}\label{eq:N-small}
+  \log N=O(\log n)=o(n).
+\end{equation}
+We now form $P=P(n)$ and $Q=Q(n)$ as in \eqref{eq:Q} and \eqref{eq:P}. Since every prime occurring in $P Q$ is larger than $\sqrt n$, while the primes $\ell_i$ are fixed, for all sufficiently large tuples the three integers $N$, $P$, and $Q$ are pairwise coprime.
+
+We shall eventually take
+\begin{equation}\label{eq:b-form}
+  b=NPQY,
+  \qquad
+  a=b-n.
+\end{equation}
+For each $i$, the factor
+\[
+  A_i=\frac{N}{m_i}PQ
+\]
+is invertible modulo $\ell_i$. Requiring
+\[
+  A_iY\pmod{\ell_i}
+\]
+to be one of the two roots of $f_2$ gives two allowed nonzero residue classes for $Y$ modulo $\ell_i$. By the Chinese remainder theorem, these conditions define a set
+\begin{equation}\label{eq:A-set}
+  \mathcal A=\mathcal A(n)\subseteq\Z/G\Z,
+  \qquad
+  |\mathcal A|=2^r>D.
+\end{equation}
+If $Y\pmod G$ belongs to $\mathcal A$, then Lemma~\ref{lem:power-local} and \eqref{eq:scale-window} give
+\begin{equation}\label{eq:aux-drop}
+  \nu_{\ell_i}(v_{a,b})
+  \leq\nu_{\ell_i}(v_{a,b-1})-1
+  \qquad(1\leq i\leq r).
+\end{equation}
+
+\section{A bounded-width family of CRT solutions}
+
+The set $S_E$ contains
+\begin{equation}\label{eq:reservoir-size}
+  K=|S_E|
+  =\left(\frac{\delta_E}{E(E+1)}+o(1)\right)\frac n{\log n}
+\end{equation}
+primes. Here $\delta_E>0$: for example, primes splitting completely in the splitting field of $f_E$ form a positive-density subset of the primes for which $f_E$ has a root. Since $E$ is even, Lemma~\ref{lem:poly} gives
+\[
+  f_E(E-X)=f_E(X).
+\]
+For every sufficiently large $q\in S_E$, each root $x$ is therefore accompanied by the distinct root $E-x$. Distinctness follows from \eqref{eq:root-avoidance}, because equality would give $x=E/2$.
+
+For every $q\in S_d$, we require
+\begin{equation}\label{eq:S-congruence}
+  NP\frac QqY\equiv x_q\pmod q,
+\end{equation}
+where $x_q$ is a root of $f_d$ modulo $q$. For $q\in S_E$, choose a paired set of roots $x_q^+,x_q^-$. They give two allowed residues
+\[
+  y_q^\pm
+  \equiv x_q^\pm\left(NP\frac Qq\right)^{-1}\pmod q
+\]
+for $Y\pmod q$. Put, in $\F_q$,
+\[
+  m_q=\frac{y_q^++y_q^-}{2},
+  \qquad
+  h_q=\frac{y_q^+-y_q^-}{2}.
+\]
+Thus $h_q\neq0$.
+
+Let $e_q$ be the CRT idempotent modulo $Q$ satisfying
+\[
+  e_q\equiv1\pmod q,
+  \qquad
+  e_q\equiv0\pmod{Q/q}.
+\]
+Choose the integer $C_q$ with
+\begin{equation}\label{eq:Cq}
+  C_q\equiv h_qe_q\pmod Q,
+  \qquad
+  -\frac Q2<C_q<\frac Q2.
+\end{equation}
+Since $Q/q\mid C_q$, there is an integer $t_q$ such that
+\begin{equation}\label{eq:tq}
+  C_q=\frac Qq t_q,
+  \qquad
+  0<|t_q|<\frac q2.
+\end{equation}
+
+Choose one prime $q_0\in S_E$. If necessary, choose one further prime of $S_E$ and fix one of its two roots, so that an even number $2J$ of reservoir primes remains. By \eqref{eq:reservoir-size},
+\begin{equation}\label{eq:J-size}
+  J\asymp_E\frac n{\log n}.
+\end{equation}
+No two of these centered integers are equal: if $C_q=C_r$ for distinct primes $q,r$, then the common value is divisible by both $Q/q$ and $Q/r$, hence by $Q$, contradicting \eqref{eq:Cq} and $h_q\neq0$. Order the corresponding centered integers $C_q$ increasingly and pair adjacent terms. If the $j$th pair is $(q_j,r_j)$, define
+\begin{equation}\label{eq:Dj}
+  D_j=C_{r_j}-C_{q_j}>0.
+\end{equation}
+Then
+\begin{equation}\label{eq:width}
+  \sum_{j=1}^{J}D_j<Q.
+\end{equation}
+Indeed, the paired intervals are disjoint and all $C_q$ lie between $-Q/2$ and $Q/2$.
+
+Let $W_0\pmod Q$ be the CRT solution obtained by using the midpoint residue $m_q$ at every unfixed reservoir prime, the selected fixed root at the possible extra reservoir prime, and a fixed root at every $q\in S\setminus S_E$. Choose $W_0$ in $[0,Q)$. For signs
+\[
+  \sigma,\eta_1,\ldots,\eta_J\in\{-1,1\},
+\]
+put
+\begin{equation}\label{eq:W}
+  W_{\sigma,\boldsymbol\eta}
+  =W_0+\sigma C_{q_0}+\sum_{j=1}^{J}\eta_jD_j.
+\end{equation}
+The opposite signs within each adjacent pair ensure that every $W_{\sigma,\boldsymbol\eta}$ satisfies all congruences \eqref{eq:S-congruence}. By \eqref{eq:Cq} and \eqref{eq:width},
+\begin{equation}\label{eq:W-range}
+  -\frac{3Q}{2}<W_{\sigma,\boldsymbol\eta}<\frac{5Q}{2}.
+\end{equation}
+
+For $\alpha\in\mathcal A$, let $Y_{\sigma,\boldsymbol\eta,\alpha}$ be the unique integer satisfying
+\begin{equation}\label{eq:Y-CRT}
+  0\leq Y_{\sigma,\boldsymbol\eta,\alpha}<GQ,
+  \qquad
+  Y_{\sigma,\boldsymbol\eta,\alpha}\equiv W_{\sigma,\boldsymbol\eta}\pmod Q,
+  \qquad
+  Y_{\sigma,\boldsymbol\eta,\alpha}\equiv\alpha\pmod G.
+\end{equation}
+By \eqref{eq:W-range},
+\begin{equation}\label{eq:Y-W-m}
+  Y_{\sigma,\boldsymbol\eta,\alpha}
+  =W_{\sigma,\boldsymbol\eta}+mQ
+\end{equation}
+for some
+\begin{equation}\label{eq:m-set}
+  m\in\{-2,-1,0,1,\ldots,G+1\}.
+\end{equation}
+The important point is that the set in \eqref{eq:m-set} is fixed, independently of $n$.
+
+\section{Anti-concentration and the controlled insoluble primes}
+
+We use the following direct corollary of the finite-field Hal\'asz inequality of Ferber, Jain, Luh and Samotij \cite[Theorem~1.4]{FJLS}.
+
+\begin{lemma}[Finite-field Hal\'asz bound]\label{lem:Halasz}
+Let $p$ be an odd prime, let $a_1,\ldots,a_s$ be nonzero elements of $\F_p$, and let $\epsilon_1,\ldots,\epsilon_s$ be independent uniform signs. Let $R$ be the number of ordered signed relations
+\[
+  \pm a_i\pm a_j=0
+\]
+with $i\neq j$. Then
+\begin{equation}\label{eq:Halasz}
+  \sup_{x\in\F_p}
+  \Pr\left(\sum_{i=1}^{s}\epsilon_i a_i=x\right)
+  \ll
+  \frac1p+\frac1{s^{3/2}}+\frac{R}{s^{5/2}}+e^{-s/100}.
+\end{equation}
+The implied constant is absolute.
+\end{lemma}
+
+\begin{proof}
+Apply \cite[Theorem~1.4]{FJLS} with $k=1$, vector length $s$, and $M=s/100$. Its hypotheses are
+\[
+  30M\leq s,
+  \qquad
+  80M\leq s,
+\]
+which hold. The quantity $R_1$ in that theorem counts all ordered signed two-term zero sums, including repetitions. Since $p$ is odd and the $a_i$ are nonzero, the repeated-index relations contribute exactly $2s$, and all remaining relations are counted by $R$. Substitution gives \eqref{eq:Halasz}.
+\end{proof}
+
+Fix $p\in T_d$ with $d\leq D$. Since $p\mid P$, put
+\[
+  z_p\equiv \frac bp
+  =N\frac PpQY\pmod p.
+\]
+The multiplier $N(P/p)Q$ is nonzero modulo $p$. Lemma~\ref{lem:T-local} shows that it is enough to avoid a set
+\begin{equation}\label{eq:Bp}
+  \mathcal B_p\subseteq\F_p,
+  \qquad
+  |\mathcal B_p|\leq d\leq D,
+\end{equation}
+of bad residues for $Y\pmod p$.
+
+We next estimate the concentration of the random sum in \eqref{eq:W}. For a pair $(q_j,r_j)$, equations \eqref{eq:tq} and \eqref{eq:Dj} give
+\begin{equation}\label{eq:Dj-factor}
+  D_j=\frac{Q}{q_jr_j}
+      \bigl(q_jt_{r_j}-r_jt_{q_j}\bigr).
+\end{equation}
+The integer in parentheses is nonzero: reducing a hypothetical equality modulo $q_j$ would give $q_j\mid t_{q_j}$, contrary to \eqref{eq:tq}. Its absolute value is less than $q_jr_j$.
+
+Every reservoir prime is at most $n/E$, whereas every $p\in T^{(D)}$ is larger than $n/(D+1)$. Since $E>D+1$, a fixed $D_j$ can vanish modulo at most one prime in $T^{(D)}$. Indeed, two such primes would have product larger than $n^2/(D+1)^2$, while the nonzero factor in parentheses in \eqref{eq:Dj-factor} has absolute value less than $n^2/E^2$.
+
+Let
+\[
+  z(p)=|\{j:D_j\equiv0\pmod p\}|.
+\]
+Then
+\begin{equation}\label{eq:sum-z}
+  \sum_{p\in T^{(D)}}z(p)\leq J.
+\end{equation}
+Consequently, there is at most one prime $p_*$ for which
+\begin{equation}\label{eq:exceptional}
+  z(p_*)>\frac J2.
+\end{equation}
+We call it exceptional if it exists.
+
+For a nonexceptional $p$, at least $J/2$ of the coefficients $D_j$ are nonzero modulo $p$. Let $R_p$ be the number of ordered signed relations
+\[
+  \pm D_j\pm D_k=0\pmod p,
+  \qquad j\neq k,
+\]
+among these nonzero coefficients. Then
+\begin{equation}\label{eq:sum-R}
+  \sum_{\substack{p\in T^{(D)}\\p\neq p_*}}R_p\ll_{D,E}J^2.
+\end{equation}
+To prove this, fix two distinct pairs $(q,r)$ and $(u,v)$, where the four letters denote distinct reservoir primes and
+\[
+  \frac{D_j}{Q}=\frac{t_r}{r}-\frac{t_q}{q},
+  \qquad
+  \frac{D_k}{Q}=\frac{t_v}{v}-\frac{t_u}{u}.
+\]
+For signs $\epsilon,\epsilon'\in\{-1,1\}$, a congruence
+\[
+  \epsilon D_j+\epsilon'D_k\equiv0\pmod p
+\]
+implies that $p$ divides
+\begin{equation}\label{eq:relation-integer}
+  F_{\epsilon,\epsilon'}
+  =\epsilon uv(qt_r-rt_q)+\epsilon'qr(ut_v-vt_u).
+\end{equation}
+This integer is nonzero: modulo $q$ it is congruent to
+\[
+  -\epsilon ruv\,t_q\not\equiv0\pmod q,
+\]
+because $q,r,u,v$ are distinct primes and $0<|t_q|<q/2$. Moreover,
+$|F_{\epsilon,\epsilon'}|=O_E(n^4)$. Since every controlled prime exceeds $n/(D+1)$, a nonzero integer of this size has only $O_D(1)$ controlled prime divisors. Summing over the $O(J^2)$ ordered signed pairs proves \eqref{eq:sum-R}.
+
+Choose the signs $\eta_j$ independently and uniformly. For a nonexceptional $p$, delete the coefficients $D_j$ that vanish modulo $p$ and apply Lemma~\ref{lem:Halasz}. Uniformly in $p$,
+\[
+  \rho_p
+  :=\sup_{x\in\F_p}
+       \Pr\left(\sum_{j=1}^{J}\eta_jD_j=x\right)
+  \ll
+  \frac1p+\frac1{J^{3/2}}+\frac{R_p}{J^{5/2}}+e^{-c_0J}
+\]
+for an absolute $c_0>0$. Now
+\[
+  |T^{(D)}|=O_D\!\left(\frac n{\log n}\right)=O_{D,E}(J)
+\]
+and, since every controlled prime is larger than $n/(D+1)$,
+\[
+  \sum_{p\in T^{(D)}}\frac1p=O_D\!\left(\frac1{\log n}\right).
+\]
+Together with \eqref{eq:sum-R}, this gives
+\begin{align*}
+  \sum_{\substack{p\in T^{(D)}\\p\neq p_*}}\rho_p
+  &\ll_{D,E}
+    \frac1{\log n}
+    +\frac{|T^{(D)}|}{J^{3/2}}
+    +\frac{1}{J^{5/2}}
+       \sum_{\substack{p\in T^{(D)}\\p\neq p_*}}R_p
+    +|T^{(D)}|e^{-c_0J}\\
+  &\ll_{D,E}
+    \frac1{\log n}+\frac1{\sqrt J}+Je^{-c_0J}
+   =o(1).
+\end{align*}
+Thus
+\begin{equation}\label{eq:sum-rho}
+  \sum_{\substack{p\in T^{(D)}\\p\neq p_*}}\rho_p=o(1).
+\end{equation}
+
+Fix $p\neq p_*$, $\sigma\in\{-1,1\}$, and $\alpha\in\mathcal A$. If the integer $Y_{\sigma,\boldsymbol\eta,\alpha}$ in \eqref{eq:Y-CRT} is bad modulo $p$, then by \eqref{eq:W}, \eqref{eq:Y-W-m}, \eqref{eq:m-set}, and \eqref{eq:Bp}, the random sum
+\[
+  \sum_{j=1}^{J}\eta_jD_j\pmod p
+\]
+hits one of at most
+\[
+  D(G+4)
+\]
+fixed target residues. Hence the probability of this event is at most $D(G+4)\rho_p$. There are only $2|\mathcal A|=2^{r+1}$ choices of $(\sigma,\alpha)$. By \eqref{eq:sum-rho} and the union bound, for all sufficiently large $n$ there is a choice of $\boldsymbol\eta$ such that
+\begin{equation}\label{eq:all-nonexceptional-good}
+  Y_{\sigma,\boldsymbol\eta,\alpha}\notin\mathcal B_p
+\end{equation}
+for every nonexceptional $p\in T^{(D)}$, every $\sigma$, and every $\alpha\in\mathcal A$. Fix such a choice of $\boldsymbol\eta$.
+
+\section{The exceptional prime and the size of \texorpdfstring{$Y$}{Y}}
+
+If no exceptional prime exists, choose any $\alpha_\sigma\in\mathcal A$ for each $\sigma\in\{-1,1\}$. Suppose that $p_*$ exists. For fixed $\sigma$, the residues
+\[
+  Y_{\sigma,\boldsymbol\eta,\alpha}\pmod{p_*},
+  \qquad \alpha\in\mathcal A,
+\]
+are pairwise distinct. Indeed, two such integers have the same residue modulo $Q$, so their difference is $kQ$ with $|k|<G$. If $p_*$ divides this difference, then $p_*\nmid Q$ and $p_*>G$ for all sufficiently large $n$, so $k=0$. The two integers are then equal, and their residues modulo $G$ are equal, forcing the two values of $\alpha$ to be equal.
+
+By \eqref{eq:A-set} and \eqref{eq:Bp},
+\[
+  |\mathcal A|=2^r>D\geq|\mathcal B_{p_*}|.
+\]
+Thus, for each $\sigma$, we may choose $\alpha_\sigma\in\mathcal A$ such that
+\[
+  Y_\sigma:=Y_{\sigma,\boldsymbol\eta,\alpha_\sigma}
+\]
+is good modulo $p_*$. By \eqref{eq:all-nonexceptional-good}, both $Y_+$ and $Y_-$ are therefore good at every prime of $T^{(D)}$.
+
+Modulo $Q$,
+\[
+  Y_+-Y_-\equiv2C_{q_0}.
+\]
+By \eqref{eq:tq}, every integer in this nonzero residue class has absolute value at least $Q/q_0$: indeed,
+\[
+  2C_{q_0}+kQ
+  =\frac{Q}{q_0}(2t_{q_0}+kq_0),
+\]
+and the integer in parentheses is nonzero. Hence
+\[
+  |Y_+-Y_-|\geq\frac{Q}{q_0}\geq\frac Qn.
+\]
+Both values lie in $[0,GQ)$, so at least one of them satisfies
+\begin{equation}\label{eq:Y-size}
+  \frac Qn\leq Y<GQ.
+\end{equation}
+Fix such a $Y$ and define $a,b$ by \eqref{eq:b-form}.
+
+\section{Completion of the proof}
+
+The congruences imposed above imply
+\begin{equation}\label{eq:Y-coprime}
+  \gcd(Y,NPQ)=1.
+\end{equation}
+Indeed, the chosen residues modulo every $q\mid Q$ are nonzero by Lemma~\ref{lem:poly}; the chosen residues modulo every $\ell_i$ are also nonzero; and for every $p\mid P$, the residue $Y=0$ corresponds to $z_p=0$, which belongs to the bad set and was avoided.
+
+For every $q\in S_d$, congruence \eqref{eq:S-congruence} says that
+\[
+  \frac bq=NP\frac QqY
+\]
+is a root of $f_d$ modulo $q$. Lemma~\ref{lem:S-local} therefore gives
+\begin{equation}\label{eq:Q-drop}
+  \nu_q(v_{a,b})\leq\nu_q(v_{a,b-1})-1
+  \qquad(q\mid Q).
+\end{equation}
+For every $\ell_i\mid G$, equation \eqref{eq:aux-drop} gives the same decrease. For every $p\mid P$, our choice of $Y$ and Lemma~\ref{lem:T-local} give
+\begin{equation}\label{eq:P-neutral}
+  \nu_p(v_{a,b})\leq\nu_p(v_{a,b-1}).
+\end{equation}
+At every other prime, Lemma~\ref{lem:endpoint} and \eqref{eq:Y-coprime} show that a possible increase is at most the exponent of that prime in $Y$. Multiplying the valuation inequalities yields
+\begin{equation}\label{eq:ratio}
+  \frac{v_{a,b}}{v_{a,b-1}}
+  \leq\frac{Y}{GQ}<1
+\end{equation}
+by \eqref{eq:Y-size}. Hence
+\[
+  v_{a,b}<v_{a,b-1}.
+\]
+
+It remains to estimate the gap. By \eqref{eq:Q-asymp}, \eqref{eq:P-asymp}, \eqref{eq:N-small}, and \eqref{eq:Y-size},
+\[
+  \log Y=\log Q+O(\log n)=(c+o(1))n
+\]
+and therefore
+\begin{equation}\label{eq:log-b}
+\begin{aligned}
+  \log b
+  &=\log N+\log P+\log Q+\log Y\\
+  &=(\tau_D+2c+o(1))n.
+\end{aligned}
+\end{equation}
+In particular, $b$ is exponential in $n$, so
+\[
+  a=b-n=(1-o(1))b
+\]
+and
+\[
+  \log a=(\tau_D+2c+o(1))n.
+\]
+Since $b-a=n$,
+\begin{equation}\label{eq:gap-limit}
+  \frac{b-a}{\log a}
+  =\frac1{\tau_D+2c}+o(1).
+\end{equation}
+By \eqref{eq:D-choice}, the right-hand side is less than
+\[
+  \frac1{1+c}+\varepsilon
+\]
+for all sufficiently large tuples in Lemma~\ref{lem:simultaneous-powers}. There are infinitely many such tuples, and $a\to\infty$ along them. Since $b(a)\leq b$ for each constructed value of $a$, the asserted upper bound for the lower limit follows as well. This proves Theorem~\ref{thm:main}.
+
+\begin{thebibliography}{9}
+
+\bibitem{VD}
+W. van Doorn,
+\emph{On the non-monotonicity of the denominator of generalized harmonic sums},
+unpublished manuscript.
+
+\bibitem{FJLS}
+A. Ferber, V. Jain, K. Luh and W. Samotij,
+\emph{On the counting problem in inverse Littlewood--Offord theory},
+J. London Math. Soc. (2) \textbf{103} (2021), 1333--1362.
+\href{https://doi.org/10.1112/jlms.12409}{doi:10.1112/jlms.12409}.
+
+\bibitem{Chebotarev}
+P. Stevenhagen and H. W. Lenstra Jr.,
+\emph{Chebotar\"ev and his density theorem},
+Math. Intelligencer \textbf{18} (1996), no.~2, 26--37.
+
+\end{thebibliography}
+
+\end{document}
