@@ -1,0 +1,235 @@
+\documentclass{amsart}
+\usepackage{amssymb,amsmath,amsthm,hyperref}
+\hypersetup{
+  hidelinks,
+  pdftitle={A density-one lower bound for the first decrease of a harmonic denominator},
+  pdfauthor={Wouter van Doorn}
+}
+
+\setlength\parindent{0pt}
+\hyphenpenalty=10000
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\begin{document}
+
+\title[A density-one lower bound]{A density-one lower bound for the first decrease of a harmonic denominator}
+
+\author{ChatGPT}
+\address{}
+\email{}
+\date{}
+
+\begin{abstract}
+For a positive integer $a$, let $b(a)$ be the smallest integer $b>a$ such that the denominator of
+$$
+\frac{1}{a}+\frac{1}{a+1}+\cdots+\frac{1}{b}
+$$
+is smaller than the denominator of the same sum ending at $b-1$. We prove that
+$$
+b(a)>a+\exp\left(\frac12\sqrt{\log a\log\log a}\right)
+$$
+for almost all positive integers $a$. In particular, for every fixed $C>0$ we have $b(a)>a+(\log a)^C$ for almost all $a$.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+For positive integers $a<b$, let $u_{a,b}$ and $v_{a,b}$ be the coprime positive integers for which
+$$
+\sum_{i=a}^b\frac1i=\frac{u_{a,b}}{v_{a,b}}.
+$$
+All logarithms in this paper are natural. For a given $a\in\mathbb N$, let $b(a)$ be the smallest integer $b>a$ for which $v_{a,b}<v_{a,b-1}$. The existence of $b(a)$ for every $a$ was asked by Erd\H{o}s and Graham in~\cite{cnt} and proved in~\cite{VD}. More recently, the exact positive value of
+$$
+\liminf_{a\to\infty}\frac{b(a)-a}{\log a}
+$$
+was determined in~\cite{shortest}. Thus there are infinitely many $a$ for which $b(a)-a$ has logarithmic order. The result below shows that these values of $a$ form a set of density zero.
+
+\begin{theorem}\label{main}
+For almost all positive integers $a$ we have
+$$
+b(a)>a+\exp\left(\frac12\sqrt{\log a\log\log a}\right).
+$$
+Equivalently, as $x\to\infty$,
+$$
+\#\left\{a\le x:b(a)\le a+\exp\left(\frac12\sqrt{\log a\log\log a}\right)\right\}=o(x).
+$$
+\end{theorem}
+
+\begin{corollary}\label{powers}
+For every fixed $C>0$, we have
+$$
+b(a)>a+(\log a)^C
+$$
+for almost all positive integers $a$. In particular, there are infinitely many positive integers $a$ for which $b(a)>a+(\log a)^2$.
+\end{corollary}
+
+\section{A necessary condition for a decrease}
+For a positive integer $n$, let
+$$
+L_n:=\operatorname{lcm}(1,2,\ldots,n).
+$$
+We start with a necessary condition for the denominator to decrease.
+
+\begin{lemma}\label{local}
+For all positive integers $a<b$, we have
+$$
+\frac{v_{a,b}}{v_{a,b-1}}\ge \frac{b}{\gcd(b,L_{b-a})^2}.
+$$
+Consequently, if $v_{a,b}<v_{a,b-1}$, then
+$$
+\gcd(b,L_{b-a})>\sqrt b.
+$$
+\end{lemma}
+
+\begin{proof}
+Write
+$$
+\sum_{i=a}^{b-1}\frac1i=\frac UV,
+$$
+where $U$ and $V$ are coprime positive integers, so that $V=v_{a,b-1}$. Let $q=\gcd(V,b)$ and write $V=qV'$ and $b=qb'$. We then have $\gcd(V',b')=1$ and
+$$
+\frac UV+\frac1b=\frac{Ub'+V'}{qV'b'}.
+$$
+Since $\gcd(U,V')=\gcd(V',b')=1$, the numerator $Ub'+V'$ is coprime to both $V'$ and $b'$. Hence the only possible cancellation is with $q$, and
+$$
+\frac{v_{a,b}}{v_{a,b-1}}
+=\frac{b'}{\gcd(Ub'+V',q)}
+\ge \frac{b'}q
+=\frac{b}{q^2}.
+$$
+
+Since $V$ divides $\operatorname{lcm}(a,a+1,\ldots,b-1)$, we have
+$$
+q\le \gcd\big(b,\operatorname{lcm}(a,a+1,\ldots,b-1)\big).
+$$
+For every prime power $p^k\mid b$, there is a multiple of $p^k$ in the interval $[a,b-1]$ if and only if $b-p^k\ge a$, or equivalently $p^k\le b-a$. It follows that
+$$
+\gcd\big(b,\operatorname{lcm}(a,a+1,\ldots,b-1)\big)=\gcd(b,L_{b-a}).
+$$
+This proves the first claim. If $v_{a,b}<v_{a,b-1}$, the first claim gives $b/\gcd(b,L_{b-a})^2<1$, which proves the second claim.
+\end{proof}
+
+\section{Proof of Theorem~\ref{main}}
+\begin{proof}
+Let $X$ be large and set
+$$
+N:=\left\lfloor\exp\left(\frac12\sqrt{\log(2X)\log\log(2X)}\right)\right\rfloor.
+$$
+We count the integers $a\in[X,2X)$ for which $v_{a,a+n}<v_{a,a+n-1}$ for some $1\le n\le N$. By Lemma~\ref{local}, every such pair $(a,n)$ satisfies
+$$
+\gcd(a+n,L_n)>\sqrt{a+n}>\sqrt X.
+$$
+Moreover, this greatest common divisor divides $L_N$ and $a+n$. Since $N<X$ for all sufficiently large $X$, it is also smaller than $3X$. Therefore the number of integers under consideration is at most
+\begin{equation}\label{count}
+N\sum_{\substack{d\mid L_N\\ \sqrt X<d<3X}}\left(\frac Xd+1\right).
+\end{equation}
+
+Let $0<\delta\le\frac12$ and define
+$$
+E:=\prod_{p\le N}\left(1-p^{-1+\delta}\right)^{-1}.
+$$
+Since every divisor of $L_N$ only has prime factors at most $N$, we have
+$$
+\sum_{d\mid L_N}d^{-1+\delta}\le E.
+$$
+Moreover, $d<3X$ implies $X/d+1<4X/d$. Hence, after dividing~\eqref{count} by $X$, the proportion of integers $a\in[X,2X)$ under consideration is
+\begin{equation}\label{proportion}
+\ll N\sum_{\substack{d\mid L_N\\d>\sqrt X}}\frac1d
+\le NE X^{-\delta/2}.
+\end{equation}
+
+We next estimate $E$. Since $\delta\le\frac12$, we have
+$$
+\log E\ll\sum_{p\le N}p^{-1+\delta}.
+$$
+By partial summation and the prime number theorem,
+$$
+\sum_{p\le N}p^{-1+\delta}
+\ll \frac{N^\delta}{\log N}+\int_2^N\frac{t^{-1+\delta}}{\log t}\,dt.
+$$
+If $\delta\log N\ge1$, splitting the integral at $e^{1/\delta}$ gives
+\begin{equation}\label{eulerbound}
+\log E\ll \log\left(\frac2\delta\right)+\frac{N^\delta}{\delta\log N}.
+\end{equation}
+Indeed, the part below $e^{1/\delta}$ is $\ll\log(2/\delta)$. After the substitution $u=\delta\log t$, the part above $e^{1/\delta}$ is bounded by a constant multiple of
+$$
+\int_1^{\delta\log N}\frac{e^u}{u}\,du
+\ll \frac{N^\delta}{\delta\log N}.
+$$
+
+Put $y=\log X$ and choose
+$$
+\delta:=\frac{\frac12\log y+\frac14\log\log y}{\log N}.
+$$
+For sufficiently large $X$, this choice satisfies $0<\delta\le\frac12$ and $\delta\log N\ge1$. Moreover,
+$$
+N^\delta=y^{1/2}(\log y)^{1/4},
+$$
+so~\eqref{eulerbound} gives
+\begin{equation}\label{Esimple}
+\log E\ll \log y+y^{1/2}(\log y)^{-3/4}.
+\end{equation}
+On the other hand, since
+$$
+\log N=\frac12\sqrt{y\log y}+o(1),
+$$
+we have
+\begin{align}
+\frac{\delta y}{2}-\log N
+&=\frac{y}{2\log N}\left(\frac12\log y+\frac14\log\log y\right)-\log N \notag\\
+&=\left(\frac14+o(1)\right)\sqrt{\frac{y}{\log y}}\log\log y.\label{saving}
+\end{align}
+The right-hand side of~\eqref{Esimple} is
+$$
+o\left(\sqrt{\frac{y}{\log y}}\log\log y\right).
+$$
+Combining this with~\eqref{saving}, we obtain
+$$
+\log\left(NE X^{-\delta/2}\right)
+=\log N+\log E-\frac{\delta y}{2}\longrightarrow-\infty.
+$$
+By~\eqref{proportion}, only $o(X)$ integers $a\in[X,2X)$ admit a decrease within the next $N$ terms.
+
+The function
+$$
+\exp\left(\frac12\sqrt{\log x\log\log x}\right)
+$$
+is increasing for all sufficiently large $x$. Hence every $a\in[X,2X)$ for which
+$$
+b(a)\le a+\exp\left(\frac12\sqrt{\log a\log\log a}\right)
+$$
+is among the integers just counted. Thus the number of exceptions in $[X,2X)$ is $o(X)$. A standard dyadic decomposition now shows that the number of exceptions up to $x$ is $o(x)$, proving Theorem~\ref{main}.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{powers}]
+For every fixed $C>0$, we have
+$$
+\frac12\sqrt{\log a\log\log a}>C\log\log a
+$$
+for all sufficiently large $a$. The corollary follows from Theorem~\ref{main}.
+\end{proof}
+
+\begin{thebibliography}{9}
+
+\bibitem{VD}
+W. van Doorn,
+\emph{On the non-monotonicity of the denominator of generalized harmonic sums},
+arXiv:2411.03073 (2024).
+
+\bibitem{shortest}
+W. van Doorn,
+\emph{The shortest harmonic sums with decreasing denominator},
+arXiv:2609.00104 (2026).
+
+\bibitem{cnt}
+P.~Erd\H{o}s and R.~L. Graham,
+\emph{Old and new problems and results in combinatorial number theory},
+Monographies de L'Enseignement Math\'ematique, \textbf{28},
+1980.
+
+\end{thebibliography}
+
+\end{document}
